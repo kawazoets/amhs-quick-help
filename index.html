@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AMHS Quick Help</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f7fa;
+      color: #1f2937;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .app {
+      width: min(100%, 980px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    .header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      margin: 0 0 8px;
+      color: #075985;
+      font-size: 30px;
+    }
+
+    .header p {
+      margin: 0;
+      color: #64748b;
+      font-size: 15px;
+    }
+
+    .selector {
+      margin-bottom: 16px;
+      padding: 16px;
+      background: white;
+      border: 1px solid #dbe4ec;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .selector label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #94a3b8;
+      border-radius: 8px;
+      background: white;
+      font-size: 16px;
+    }
+
+    .progress {
+      margin-bottom: 10px;
+      color: #64748b;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .progress-bar {
+      height: 7px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      background: #dbe4ec;
+      border-radius: 10px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 12.5%;
+      background: #0284c7;
+      transition: width 0.25s ease;
+    }
+
+    .card {
+      overflow: hidden;
+      background: white;
+      border: 1px solid #dbe4ec;
+      border-radius: 14px;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+    }
+
+    .card-content {
+      padding: 22px;
+    }
+
+    .step-number {
+      margin-bottom: 8px;
+      color: #0284c7;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: #0f172a;
+      font-size: 25px;
+    }
+
+    .japanese {
+      margin: 0 0 8px;
+      color: #334155;
+      font-size: 17px;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    .english {
+      margin: 0 0 18px;
+      color: #475569;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .instructions {
+      margin: 0 0 20px;
+      padding-left: 24px;
+      line-height: 1.7;
+    }
+
+    .image-area {
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #eef2f6;
+      border-top: 1px solid #dbe4ec;
+    }
+
+    .image-area img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .image-placeholder {
+      padding: 50px 20px;
+      color: #64748b;
+      text-align: center;
+    }
+
+    .image-placeholder strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #334155;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      margin-top: 18px;
+    }
+
+    button {
+      min-width: 130px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    .previous {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+
+    .next {
+      background: #0284c7;
+      color: white;
+    }
+
+    .note {
+      margin-top: 18px;
+      padding: 14px;
+      background: #fff7ed;
+      border-left: 4px solid #f97316;
+      border-radius: 6px;
+      color: #7c2d12;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .app {
+        padding: 16px 10px 30px;
+      }
+
+      .header h1 {
+        font-size: 25px;
+      }
+
+      .card-content {
+        padding: 18px;
+      }
+
+      h2 {
+        font-size: 21px;
+      }
+
+      .controls {
+        gap: 8px;
+      }
+
+      button {
+        min-width: 0;
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="app">
+
+    <header class="header">
+      <h1>AMHS Quick Help</h1>
+      <p>Local Transport Execution Guide</p>
+    </header>
+
+    <section class="selector">
+      <label for="stepSelector">Select the information you need</label>
+
+      <select id="stepSelector" onchange="selectStep()">
+        <option value="0">1. Common Layout</option>
+        <option value="1">2. Open Local Transport Execute</option>
+        <option value="2">3. Select FOUP ID</option>
+        <option value="3">4. Select Destination</option>
+        <option value="4">5. Confirm Destination</option>
+        <option value="5">6. Press YES to Execute</option>
+        <option value="6">7. Check Success Notification</option>
+        <option value="7">8. Check Transfer Status</option>
+      </select>
+    </section>
+
+    <div class="progress" id="progressText">Step 1 of 8</div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <section class="card">
+      <div class="card-content">
+
+        <div class="step-number" id="stepNumber"></div>
+
+        <h2 id="title"></h2>
+
+        <p class="japanese" id="japanese"></p>
+
+        <p class="english" id="english"></p>
+
+        <ol class="instructions" id="instructions"></ol>
+
+      </div>
+
+      <div class="image-area">
+        <img id="stepImage" alt="Operation screen">
+
+        <div class="image-placeholder" id="imagePlaceholder">
+          <strong>Operation screen image</strong>
+          The image will appear here after it is uploaded.
+        </div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <button
+        class="previous"
+        id="previousButton"
+        onclick="previousStep()"
+      >
+        ← Previous
+      </button>
+
+      <button
+        class="next"
+        id="nextButton"
+        onclick="nextStep()"
+      >
+        Next →
+      </button>
+    </div>
+
+    <div class="note">
+      This quick guide supplements the official operation manual and site
+      safety procedures. Follow the approved procedure when operating the
+      equipment.
+    </div>
+
+  </main>
+
+  <script>
+    const steps = [
+      {
+        title: "Common Layout",
+        japanese: "共通画面の基本レイアウトを確認します。",
+        english: "Check the basic layout of the common system screen.",
+        instructions: [
+          "Confirm the current screen and menu.",
+          "Check the login user and system notification area.",
+          "Use the left-side menu to access the required function."
+        ],
+        image: "common-layout.png"
+      },
+      {
+        title: "Open Local Transport Execute",
+        japanese: "ローカル搬送画面を開きます。この画面でAMRを手動実行できます。",
+        english: "Open Local Transport Execute. AMR transport can be executed manually from this screen.",
+        instructions: [
+          "Open Inter-Process Transport.",
+          "Select Local Transport Execute.",
+          "Confirm that the FOUP ID, Source and Destination fields are displayed."
+        ],
+        image: "local-transport.png"
+      },
+      {
+        title: "Select the Target FOUP ID",
+        japanese: "手動で搬送する対象のFOUP IDを指定します。",
+        english: "Specify the target FOUP ID to be transported manually.",
+        instructions: [
+          "Open the FOUP ID drop-down list.",
+          "Select the required FOUP ID from the list.",
+          "Alternatively, enter the FOUP ID manually in the text box."
+        ],
+        image: "foup-id.png"
+      },
+      {
+        title: "Select the Destination",
+        japanese: "現在位置を確認し、右側のリストから搬送先を選択します。",
+        english: "Confirm the current location and select the destination from the drop-down list on the right.",
+        instructions: [
+          "After selecting the target FOUP ID, confirm the current From location.",
+          "Open the Destination drop-down list.",
+          "Select a valid To location.",
+          "Confirm that the selected locations appear on the factory map."
+        ],
+        image: "destination.png"
+      },
+      {
+        title: "Confirm the Destination",
+        japanese: "地図上に表示された目的地を確認し、問題がなければConfirmを押します。",
+        english: "Check the destination displayed on the map. If everything is correct, press Confirm.",
+        instructions: [
+          "Check the Source location.",
+          "Check the Destination location.",
+          "Confirm the destination marker on the factory map.",
+          "Press Confirm."
+        ],
+        image: "confirm.png"
+      },
+      {
+        title: "Press YES to Execute",
+        japanese: "確認画面が表示されます。内容が正しければYESを押します。",
+        english: "The confirmation dialog appears. If the entered information is correct, press YES to execute.",
+        instructions: [
+          "Review the entered transport information.",
+          "Press YES to create the transfer command.",
+          "Press No if the information needs to be corrected."
+        ],
+        image: "execute-yes.png"
+      },
+      {
+        title: "Check the Success Notification",
+        japanese: "新しい転送コマンドが作成され、完了通知が表示されます。",
+        english: "A new transfer command is created and a success notification is displayed.",
+        instructions: [
+          "Confirm that the success notification appears.",
+          "Check that a new transfer command has been created.",
+          "Continue to the Transfer Maintenance screen."
+        ],
+        image: "success.png"
+      },
+      {
+        title: "Check the Transfer Status",
+        japanese: "Transfer Maintenance画面で新しい転送コマンドの状態を確認します。",
+        english: "Open the Transfer Maintenance screen and check the status of the newly created command.",
+        instructions: [
+          "Locate the newest transfer command.",
+          "Confirm the FOUP ID, Source and Destination.",
+          "Check the Status column.",
+          "Continue monitoring until the required status is displayed."
+        ],
+        image: "transfer-status.png"
+      }
+    ];
+
+    let currentStep = 0;
+
+    function renderStep() {
+      const step = steps[currentStep];
+
+      document.getElementById("stepNumber").textContent =
+        `Step ${currentStep + 1}`;
+
+      document.getElementById("title").textContent = step.title;
+      document.getElementById("japanese").textContent = step.japanese;
+      document.getElementById("english").textContent = step.english;
+
+      const instructionList = document.getElementById("instructions");
+      instructionList.innerHTML = "";
+
+      step.instructions.forEach(instruction => {
+        const item = document.createElement("li");
+        item.textContent = instruction;
+        instructionList.appendChild(item);
+      });
+
+      document.getElementById("stepSelector").value = currentStep;
+
+      document.getElementById("progressText").textContent =
+        `Step ${currentStep + 1} of ${steps.length}`;
+
+      document.getElementById("progressFill").style.width =
+        `${((currentStep + 1) / steps.length) * 100}%`;
+
+      document.getElementById("previousButton").disabled =
+        currentStep === 0;
+
+      document.getElementById("nextButton").disabled =
+        currentStep === steps.length - 1;
+
+      const image = document.getElementById("stepImage");
+      const placeholder = document.getElementById("imagePlaceholder");
+
+      image.style.display = "none";
+      placeholder.style.display = "block";
+
+      image.onload = function () {
+        image.style.display = "block";
+        placeholder.style.display = "none";
+      };
+
+      image.onerror = function () {
+        image.style.display = "none";
+        placeholder.style.display = "block";
+      };
+
+      image.src = step.image;
+      image.alt = step.title;
+    }
+
+    function nextStep() {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        renderStep();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    function previousStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        renderStep();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    function selectStep() {
+      currentStep = Number(
+        document.getElementById("stepSelector").value
+      );
+
+      renderStep();
+    }
+
+    renderStep();
+  </script>
+</body>
+</html>
